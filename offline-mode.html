@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DreamSpot - Offline Vacation Planner</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #f5faff, #dbeeff);
+      color: #333;
+      background-attachment: fixed;
+    }
+
+    header {
+      background: linear-gradient(to right, #004080, #0073e6);
+      color: white;
+      padding: 1.2rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: 0.8px;
+      user-select: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin: 0.3rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      margin: 0;
+      font-weight: 400;
+      opacity: 0.95;
+    }
+
+    .main-nav {
+      background: #f9f9f9;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      margin: 0;
+      gap: 1.5rem;
+    }
+
+    .main-nav ul li a {
+      text-decoration: none;
+      color: #004080;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .main-nav ul li a:hover {
+      background-color: #004080;
+      color: white;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 3rem auto 5rem;
+      padding: 0 1.5rem;
+    }
+
+    h2 {
+      color: #004080;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    form {
+      background: #f8faff;
+      padding: 2rem 2.5rem;
+      border-radius: 14px;
+      box-shadow: 0 0 18px rgba(0,64,128,0.12);
+      font-size: 1rem;
+    }
+
+    label {
+      display: block;
+      margin: 1.2rem 0 0.4rem 0;
+      font-weight: 600;
+      color: #003060;
+      user-select: none;
+    }
+
+    select, input[type="date"] {
+      width: 100%;
+      max-width: 420px;
+      padding: 0.65rem 0.8rem;
+      border-radius: 9px;
+      border: 1px solid #b0c4de;
+      font-size: 1rem;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: border-color 0.3s;
+      color: #003060;
+    }
+
+    select:focus, input[type="date"]:focus {
+      border-color: #004080;
+      outline: none;
+      box-shadow: 0 0 8px #aac9ff;
+    }
+
+    input[readonly] {
+      background: #dbe9ff;
+      color: #405a83;
+      cursor: not-allowed;
+    }
+
+    button {
+      margin-top: 2.5rem;
+      background: #004080;
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 14px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 5px 14px rgba(0,64,128,0.6);
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    button:hover {
+      background: #002b55;
+    }
+    
+
+    #saved-plan {
+      margin-top: 3rem;
+      background: #e6f0ff;
+      padding: 1.8rem 2rem;
+      border-radius: 12px;
+      box-shadow: inset 0 0 12px rgba(0,64,128,0.2);
+      color: #002b55;
+      font-size: 1rem;
+      user-select: text;
+    }
+
+    #saved-plan h3 {
+      margin-top: 0;
+      font-weight: 700;
+    }
+
+    pre {
+      background:#f0f0f0; 
+      padding:1rem; 
+      border-radius:8px; 
+      white-space: pre-wrap;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>DreamSpot</h1>
+  <p>Offline Vacation Planner</p>
+</header>
+
+<nav class="main-nav">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="emotional-vacation.html">Mood-Based Vacation</a></li>
+    <li><a href="mystery-trip.html">Surprise Trip</a></li>
+    <li><a href="offline-mode.html">Offline Mode</a></li>
+    <li><a href="plan.html">Plan Your Own Vacation</a></li>
+  </ul>
+</nav>
+
+<main>
+  <h2>Plan Your Vacation Offline</h2>
+  <form id="offlineForm" onsubmit="event.preventDefault(); saveOfflinePlanAndPDF();">
+    <label for="destination">Destination</label>
+    <select id="destination" name="destination" required onchange="onDestinationChange()">
+      <option value="" disabled selected>Select your destination</option>
+      <option value="Paris">Paris, France (CDG)</option>
+      <option value="Dubai">Dubai, UAE (DXB)</option>
+      <option value="Zurich">Zurich, Switzerland (ZRH)</option>
+    </select>
+
+    <label for="hotel-booked">Hotel Booked</label>
+    <input type="text" id="hotel-booked" name="hotel-booked" readonly placeholder="Select a destination first" />
+
+    <label for="start-date">Departure Date</label>
+    <input type="date" id="start-date" name="start-date" required onchange="syncReturnDate()" />
+
+    <label for="departure-flight-time">Select Departure Flight Time</label>
+    <select id="departure-flight-time" name="departure-flight-time" required>
+      <option value="" disabled selected>Select departure flight time</option>
+    </select>
+
+    <label for="end-date">Return Date</label>
+    <input type="date" id="end-date" name="end-date" required onchange="validateReturnDate()" />
+
+    <label for="return-flight-time">Select Return Flight Time</label>
+    <select id="return-flight-time" name="return-flight-time" required>
+      <option value="" disabled selected>Select return flight time</option>
+    </select>
+
+    <button type="submit">Save Plan & Download PDF</button>
+  </form>
+
+  <section id="saved-plan" style="display:none;">
+    <h3>Your Saved Vacation Plan</h3>
+    <p><strong>Destination:</strong> <span id="plan-destination"></span></p>
+    <p><strong>Hotel Booked:</strong> <span id="plan-hotel-booked"></span></p>
+    <p><strong>Departure Date:</strong> <span id="plan-start-date"></span></p>
+    <p><strong>Departure Flight Time:</strong> <span id="plan-dep-flight-time"></span></p>
+    <p><strong>Return Date:</strong> <span id="plan-end-date"></span></p>
+    <p><strong>Return Flight Time:</strong> <span id="plan-ret-flight-time"></span></p>
+    <p><strong>Flight Ticket:</strong></p>
+    <pre id="plan-ticket-details"></pre>
+  </section>
+</main>
+
+<footer>
+  <p>📍 Bulevardul Unirii, Bucharest, Romania | 📞 +40 700 123 456 | 📧 contact@dreamspot.ro</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  const hotelsByDestination = {
+    "Paris": "Hotel Le Meurice, 228 Rue de Rivoli",
+    "Dubai": "Atlantis The Palm, Crescent Rd",
+    "Zurich": "Baur au Lac, Talstrasse 1"
+  };
+
+  const airportCodes = {
+    "Bucharest": "OTP",
+    "Paris": "CDG",
+    "Dubai": "DXB",
+    "Zurich": "ZRH"
+  };
+
+  const flightDurations = {
+    "Paris": 180,
+    "Dubai": 300,
+    "Zurich": 180
+  };
+
+  const flightPrefixes = {
+    "Paris": "AF",
+    "Dubai": "EK",
+    "Zurich": "LX"
+  };
+
+  // Predefined flight times per destination (24h format)
+  const departureFlightTimes = {
+    "Paris": ["07:30", "13:00", "18:45"],
+    "Dubai": ["06:00", "12:30", "20:15"],
+    "Zurich": ["08:15", "14:00", "19:30"]
+  };
+
+  const returnFlightTimes = {
+    "Paris": ["09:00", "14:30", "20:00"],
+    "Dubai": ["07:45", "13:15", "21:00"],
+    "Zurich": ["10:00", "15:30", "21:45"]
+  };
+
+  function onDestinationChange() {
+    const dest = document.getElementById('destination').value;
+    document.getElementById('hotel-booked').value = hotelsByDestination[dest] || "";
+
+    populateFlightTimes('departure-flight-time', departureFlightTimes[dest]);
+    populateFlightTimes('return-flight-time', returnFlightTimes[dest]);
+  }
+
+  function populateFlightTimes(selectId, times) {
+    const select = document.getElementById(selectId);
+    select.innerHTML = '<option value="" disabled selected>Select flight time</option>';
+    times.forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t;
+      opt.textContent = t;
+      select.appendChild(opt);
+    });
+  }
+
+  function syncReturnDate() {
+    const startInput = document.getElementById('start-date');
+    const endInput = document.getElementById('end-date');
+    if (!endInput.value || new Date(endInput.value) < new Date(startInput.value)) {
+      let dt = new Date(startInput.value);
+      dt.setDate(dt.getDate() + 7);
+      endInput.value = dt.toISOString().split('T')[0];
+    }
+  }
+
+  function validateReturnDate() {
+    const startInput = document.getElementById('start-date');
+    const endInput = document.getElementById('end-date');
+    if (new Date(endInput.value) < new Date(startInput.value)) {
+      alert("Return date cannot be before departure date.");
+      endInput.value = "";
+    }
+  }
+
+  function randomSeat() {
+    const rows = 30;
+    const seats = ['A', 'B', 'C', 'D', 'E', 'F'];
+    return `${Math.floor(Math.random() * rows) + 1}${seats[Math.floor(Math.random() * seats.length)]}`;
+  }
+
+  function randomGate() {
+    return `${String.fromCharCode(65 + Math.floor(Math.random() * 6))}${Math.floor(Math.random() * 30) + 1}`;
+  }
+
+  function formatTime(timeString) {
+    return timeString;
+  }
+
+  function generateFlightTicket(destination, dateStr, timeStr, isDeparture=true) {
+    const departureAirport = isDeparture ? airportCodes["Bucharest"] : airportCodes[destination];
+    const arrivalAirport = isDeparture ? airportCodes[destination] : airportCodes["Bucharest"];
+    const prefix = flightPrefixes[destination];
+    const duration = flightDurations[destination];
+
+    let flightNumberNum = Math.floor(100 + Math.random() * 899);
+    const flightNumber = prefix + flightNumberNum;
+
+    let departureDateTime = new Date(`${dateStr}T${timeStr}:00`);
+    let arrivalDateTime = isDeparture
+      ? new Date(departureDateTime.getTime() + duration * 60000)
+      : new Date(departureDateTime.getTime() + duration * 60000);
+
+    const seat = randomSeat();
+    const gate = randomGate();
+    const terminal = Math.floor(1 + Math.random() * 3);
+    const passengerName = "Guest";
+
+    return `Passenger: ${passengerName}
+Flight Number: ${flightNumber}
+From: ${departureAirport} (${isDeparture ? "Bucharest" : destination})
+To: ${arrivalAirport} (${isDeparture ? destination : "Bucharest"})
+Date: ${dateStr}
+Departure Time: ${formatTime(timeStr)}
+Arrival Time: ${arrivalDateTime.toTimeString().slice(0,5)}
+Terminal: ${terminal}
+Gate: ${gate}
+Seat: ${seat}
+Class: Economy`;
+  }
+
+  async function saveOfflinePlanAndPDF() {
+    const destination = document.getElementById('destination').value.trim();
+    const hotelBooked = document.getElementById('hotel-booked').value.trim();
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    const depFlightTime = document.getElementById('departure-flight-time').value;
+    const retFlightTime = document.getElementById('return-flight-time').value;
+
+    if (!destination) {
+      alert("Please select a destination.");
+      return;
+    }
+    if (!depFlightTime) {
+      alert("Please select a departure flight time.");
+      return;
+    }
+    if (!retFlightTime) {
+      alert("Please select a return flight time.");
+      return;
+    }
+    if (!startDate) {
+      alert("Please select a departure date.");
+      return;
+    }
+    if (!endDate) {
+      alert("Please select a return date.");
+      return;
+    }
+    if (new Date(endDate) < new Date(startDate)) {
+      alert("Return date cannot be before departure date.");
+      return;
+    }
+
+    const departureTicket = generateFlightTicket(destination, startDate, depFlightTime, true);
+    const returnTicket = generateFlightTicket(destination, endDate, retFlightTime, false);
+
+    // Show summary below form
+    document.getElementById('plan-destination').textContent = destination;
+    document.getElementById('plan-hotel-booked').textContent = hotelBooked;
+    document.getElementById('plan-start-date').textContent = startDate;
+    document.getElementById('plan-end-date').textContent = endDate;
+    document.getElementById('plan-dep-flight-time').textContent = depFlightTime;
+    document.getElementById('plan-ret-flight-time').textContent = retFlightTime;
+    document.getElementById('plan-ticket-details').textContent = 
+      `=== Departure Flight ===\n${departureTicket}\n\n=== Return Flight ===\n${returnTicket}`;
+    document.getElementById('saved-plan').style.display = "block";
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+      unit: 'pt',
+      format: 'a4'
+    });
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(22);
+    doc.setTextColor("#004080");
+    doc.text("DreamSpot Vacation Booking Confirmation", 40, 50);
+
+    doc.setFontSize(12);
+    doc.setTextColor("#333");
+    doc.text(`Passenger: Guest`, 40, 90);
+    doc.text(`Destination: ${destination}`, 40, 110);
+    doc.text(`Hotel Booked: ${hotelBooked}`, 40, 130);
+
+    doc.setDrawColor("#004080");
+    doc.setLineWidth(1);
+    doc.line(40, 140, 555, 140);
+
+    // Departure Flight Section
+    doc.setFontSize(16);
+    doc.setTextColor("#004080");
+    doc.text("Departure Flight", 40, 165);
+
+    doc.setFontSize(11);
+    doc.setTextColor("#000");
+    let y = 185;
+    departureTicket.split('\n').forEach(line => {
+      doc.text(line, 50, y);
+      y += 18;
+    });
+
+    doc.line(40, y + 5, 555, y + 5);
+
+    // Return Flight Section
+    y += 30;
+    doc.setFontSize(16);
+    doc.setTextColor("#004080");
+    doc.text("Return Flight", 40, y);
+    y += 20;
+
+    doc.setFontSize(11);
+    doc.setTextColor("#000");
+    returnTicket.split('\n').forEach(line => {
+      doc.text(line, 50, y);
+      y += 18;
+    });
+
+    y += 10;
+    doc.line(40, y, 555, y);
+
+    // Hotel Section
+    y += 30;
+    doc.setFontSize(16);
+    doc.setTextColor("#004080");
+    doc.text("Hotel Booking Details", 40, y);
+    y += 20;
+    doc.setFontSize(12);
+    doc.setTextColor("#000");
+    doc.text(hotelBooked, 50, y);
+
+    y += 40;
+    doc.setFontSize(9);
+    doc.setTextColor("#666");
+    doc.text("Thank you for booking with DreamSpot! We wish you a pleasant journey and unforgettable memories.", 40, y);
+
+    doc.save(`DreamSpot_${destination}_Booking_${startDate}.pdf`);
+  }
+
+
+  document.getElementById('start-date').addEventListener('change', syncReturnDate);
+  document.getElementById('destination').addEventListener('change', onDestinationChange);
+
+</script>
+
+</body>
+</html>

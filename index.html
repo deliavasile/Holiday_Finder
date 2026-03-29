@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DreamSpot - Your Ideal Vacation</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+   body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #f5faff, #dbeeff);
+      color: #333;
+      background-attachment: fixed;
+    }
+
+    header {
+      background: linear-gradient(to right, #004080, #0073e6);
+      color: white;
+      padding: 1.2rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: 0.8px;
+      user-select: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin: 0.3rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      margin: 0;
+      font-weight: 400;
+      opacity: 0.95;
+    }
+    .main-nav {
+      background: #f9f9f9;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      margin: 0;
+      gap: 1.5rem;
+    }
+
+    .main-nav ul li a {
+      text-decoration: none;
+      color: #0055aa;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .main-nav ul li a:hover {
+      background-color: #0055aa;
+      color: white;
+    }
+
+    section#slideshow {
+      margin: 2rem auto;
+      max-width: 95%;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .slide-content {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slide-textbox {
+      position: absolute;
+      bottom: 30px;
+      left: 50px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      backdrop-filter: blur(3px);
+    }
+
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.4);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      padding: 0.8rem 1rem;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+
+    .prev:hover, .next:hover {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    #map-section {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    #map {
+      height: 400px;
+      width: 100%;
+      margin-top: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #who-we-are {
+      padding: 3rem 2rem;
+      background: #fafafa;
+    }
+
+    .who-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .team-photo {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .who-text {
+      flex: 1;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>DreamSpot</h1>
+  <p>Discover personalized vacations and surprise experiences</p>
+</header>
+
+<nav class="main-nav">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="emotional-vacation.html">Mood-Based Vacation</a></li>
+    <li><a href="mystery-trip.html">Surprise Trip</a></li>
+    <li><a href="offline-mode.html">Offline Mode</a></li>
+    <li><a href="plan.html">Plan Your Own Vacation</a></li>
+  </ul>
+</nav>
+
+<section id="slideshow">
+  <div class="slideshow-container">
+    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+    <div class="slide-content">
+      <img class="slide-image" src="" alt="Vacation Slide"/>
+      <div class="slide-textbox">
+        <h3></h3>
+        <p></p>
+      </div>
+    </div>
+    <button class="next" onclick="changeSlide(1)">&#10095;</button>
+  </div>
+</section>
+
+<section id="map-section">
+  <h2>Explore Our Destinations</h2>
+  <div id="map"></div>
+</section>
+
+<section id="who-we-are">
+  <div class="who-container">
+    <img src="images/our-team.jpg" alt="Our Team" class="team-photo" />
+    <div class="who-text">
+      <h2>Who We Are</h2>
+      <p>
+        At DreamSpot, we’re more than just travel planners — we’re storytellers, explorers, and dream builders.
+        Our team is made of passionate people who believe that a vacation should reflect your personality,
+        your mood, and your deepest curiosity. Whether it's a romantic escape to Paris or a mysterious
+        journey to an undisclosed location, we craft every detail to surprise and delight you.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>📍 Bulevardul Unirii, Bucharest, Romania | 📞 +40 700 123 456 | 📧 contact@dreamspot.ro</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  const slides = [
+    { image: 'images/dubai.jpg', title: 'Dubai, UAE', desc: 'Experience luxury and desert adventure.' },
+    { image: 'images/marseille1.jpg', title: 'Marseille, France', desc: 'Sea breeze, port charm, and local life.' },
+    { image: 'images/paris.jpg', title: 'Paris, France', desc: 'Romantic getaways in the City of Lights.' },
+    { image: 'images/zurich1.jpg', title: 'Zurich, Switzerland', desc: 'Lakes, mountains, and peaceful vibes.' },
+  ];
+  let currentIndex = 0;
+  function showSlide(index) {
+    const slide = slides[index];
+    document.querySelector('.slide-image').src = slide.image;
+    document.querySelector('.slide-textbox h3').innerText = slide.title;
+    document.querySelector('.slide-textbox p').innerText = slide.desc;
+  }
+  function changeSlide(direction) {
+    currentIndex = (currentIndex + direction + slides.length) % slides.length;
+    showSlide(currentIndex);
+  }
+  window.onload = () => { showSlide(currentIndex); };
+
+  const map = L.map('map').setView([48.8566, 2.3522], 4);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+  const locations = [
+    { name: "Paris", lat: 48.8566, lon: 2.3522 },
+    { name: "Dubai", lat: 25.276987, lon: 55.296249 },
+    { name: "Zurich", lat: 47.3769, lon: 8.5417 },
+    { name: "London", lat: 51.5074, lon: -0.1278 },
+    { name: "Marseille", lat: 43.2965, lon: 5.3698 },
+    { name: "Thessaloniki", lat: 40.6401, lon: 22.9444 },
+    { name: "Naples", lat: 40.8518, lon: 14.2681 }
+  ];
+  locations.forEach(loc => {
+    L.marker([loc.lat, loc.lon]).addTo(map).bindPopup(loc.name);
+  });
+</script>
+
+</body>
+</html>

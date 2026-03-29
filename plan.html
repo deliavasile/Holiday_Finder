@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plan Your Own Vacation - DreamSpot</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #f5faff, #dbeeff);
+      color: #333;
+      background-attachment: fixed;
+    }
+
+    header {
+      background: linear-gradient(to right, #004080, #0073e6);
+      color: white;
+      padding: 1.2rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: 0.8px;
+      user-select: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin: 0.3rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      margin: 0;
+      font-weight: 400;
+      opacity: 0.95;
+    }
+
+    .main-nav {
+      background: #f9f9f9;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      margin: 0;
+      gap: 1.5rem;
+    }
+
+    .main-nav ul li a {
+      text-decoration: none;
+      color: #004080;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .main-nav ul li a:hover {
+      background-color: #004080;
+      color: white;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 3rem auto 5rem;
+      padding: 0 1.5rem;
+    }
+
+    h2 {
+      color: #004080;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    form {
+      background: #f8faff;
+      padding: 2rem 2.5rem;
+      border-radius: 14px;
+      box-shadow: 0 0 18px rgba(0,64,128,0.12);
+      font-size: 1rem;
+    }
+
+    label {
+      display: block;
+      margin: 1.2rem 0 0.4rem 0;
+      font-weight: 600;
+      color: #003060;
+      user-select: none;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select {
+      width: 100%;
+      max-width: 420px;
+      padding: 0.65rem 0.8rem;
+      border-radius: 9px;
+      border: 1px solid #b0c4de;
+      font-size: 1rem;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: border-color 0.3s;
+      color: #003060;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      border-color: #004080;
+      outline: none;
+      box-shadow: 0 0 8px #aac9ff;
+    }
+
+    button {
+      margin-top: 2.5rem;
+      background: #004080;
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 14px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 5px 14px rgba(0,64,128,0.6);
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    button:hover {
+      background: #002b55;
+    }
+
+    #results {
+      margin-top: 3rem;
+      background: #e6f0ff;
+      padding: 1.8rem 2rem;
+      border-radius: 12px;
+      box-shadow: inset 0 0 12px rgba(0,64,128,0.2);
+      color: #002b55;
+      font-size: 1rem;
+      user-select: text;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>DreamSpot</h1>
+    <p>Plan you perfect holiday</p>
+  </header>
+
+  <nav class="main-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="emotional-vacation.html">Mood-Based Vacation</a></li>
+      <li><a href="mystery-trip.html">Surprise Trip</a></li>
+      <li><a href="offline-mode.html">Offline Mode</a></li>
+      <li><a href="plan.html">Plan Your Own Vacation</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="custom-planner">
+      <h2>Vacation Planner</h2>
+      <form id="vacation-form" method="POST" action="search.php">
+
+        <label for="destination">Destination:</label>
+        <input type="text" id="destination" name="destination" placeholder="E.g. Paris, Rome..." required />
+
+        <label for="departure-date">Departure Date:</label>
+        <select id="departure-date" name="departure-date" required>
+          <option value="">-- Select --</option>
+          <option value="2025-06-05">2025-06-05</option>
+          <option value="2025-06-20">2025-06-20</option>
+          <option value="2025-07-01">2025-07-01</option>
+          <option value="2025-07-10">2025-07-10</option>
+          <option value="2025-07-15">2025-07-15</option>
+          <option value="2025-07-25">2025-07-25</option>
+          <option value="2025-08-01">2025-08-01</option>
+          <option value="2025-08-05">2025-08-05</option>
+          <option value="2025-08-20">2025-08-20</option>
+          <option value="2025-09-10">2025-09-10</option>
+        </select>
+
+        <label for="return-date">Return Date:</label>
+        <select id="return-date" name="return-date" required>
+          <option value="">-- Select --</option>
+          <option value="2025-06-12">2025-06-12</option>
+          <option value="2025-06-27">2025-06-27</option>
+          <option value="2025-07-08">2025-07-08</option>
+          <option value="2025-07-17">2025-07-17</option>
+          <option value="2025-07-22">2025-07-22</option>
+          <option value="2025-08-01">2025-08-01</option>
+          <option value="2025-08-10">2025-08-10</option>
+          <option value="2025-08-12">2025-08-12</option>
+          <option value="2025-08-27">2025-08-27</option>
+          <option value="2025-09-17">2025-09-17</option>
+        </select>
+
+        <label for="people">Number of Travelers:</label>
+        <input type="number" id="people" name="people" min="1" max="10" value="1" required />
+
+        <label for="min-price">Minimum Price (EUR):</label>
+        <input type="number" id="min-price" name="min-price" min="50" placeholder="E.g. 200" />
+
+        <label for="max-price">Maximum Price (EUR):</label>
+        <input type="number" id="max-price" name="max-price" min="50" placeholder="E.g. 600" />
+
+        <label for="accommodation">Accommodation Type:</label>
+        <select id="accommodation" name="accommodation" required>
+          <option value="hotel">Hotel</option>
+          <option value="hostel">Hostel</option>
+          <option value="airbnb">Airbnb</option>
+        </select>
+
+        <label for="flight-class">Flight Class:</label>
+        <select id="flight-class" name="flight-class" required>
+          <option value="economy">Economy</option>
+          <option value="business">Business</option>
+        </select>
+
+        <button type="submit">Search Options</button>
+      </form>
+
+      <div id="results"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>📍 Bulevardul Unirii, Bucharest, Romania | 📞 +40 700 123 456 | 📧 contact@dreamspot.ro</p>
+  </footer>
+
+</body>
+</html>

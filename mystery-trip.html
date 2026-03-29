@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DreamSpot - Mystery Trip</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #f5faff, #dbeeff);
+      color: #333;
+      background-attachment: fixed;
+    }
+
+    header {
+      background: linear-gradient(to right, #004080, #0073e6);
+      color: white;
+      padding: 1.2rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: 0.8px;
+      user-select: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin: 0.3rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      margin: 0;
+      font-weight: 400;
+      opacity: 0.95;
+    }
+
+    .main-nav {
+      background: #f9f9f9;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      margin: 0;
+      gap: 1.5rem;
+    }
+
+    .main-nav ul li a {
+      text-decoration: none;
+      color: #004080;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .main-nav ul li a:hover {
+      background-color: #004080;
+      color: white;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 3rem auto 5rem;
+      padding: 0 1.5rem;
+    }
+
+    h2 {
+      color: #004080;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .intro {
+      text-align: center;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .mystery-box {
+      background: #f8faff;
+      padding: 2rem 2.5rem;
+      border-radius: 14px;
+      box-shadow: 0 0 18px rgba(0,64,128,0.12);
+      font-size: 1rem;
+    }
+
+    label {
+      display: block;
+      margin: 1.2rem 0 0.4rem 0;
+      font-weight: 600;
+      color: #003060;
+      user-select: none;
+    }
+
+    select, input[type="date"] {
+      width: 100%;
+      max-width: 420px;
+      padding: 0.65rem 0.8rem;
+      border-radius: 9px;
+      border: 1px solid #b0c4de;
+      font-size: 1rem;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: border-color 0.3s;
+      color: #003060;
+      margin-bottom: 1.5rem;
+    }
+
+    select:focus, input[type="date"]:focus {
+      border-color: #004080;
+      outline: none;
+      box-shadow: 0 0 8px #aac9ff;
+    }
+
+    button {
+      margin-top: 2rem;
+      background: #004080;
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 14px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 5px 14px rgba(0,64,128,0.6);
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    button:hover {
+      background: #002b55;
+    }
+
+    .countdown {
+      font-size: 1.2rem;
+      color: #cc3300;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    .location-display {
+      font-size: 1.4rem;
+      color: #004080;
+      margin-top: 2rem;
+    }
+
+    .final-location img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 1.5rem;
+    }
+
+    .ticket, .accommodation {
+      background: #e6f0ff;
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin-top: 1rem;
+      box-shadow: inset 0 0 8px rgba(0,64,128,0.1);
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>DreamSpot</h1>
+  <p>Mystery Trip</p>
+</header>
+
+<nav class="main-nav">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="emotional-vacation.html">Mood-Based Vacation</a></li>
+    <li><a href="mystery-trip.html">Mystery Trip</a></li>
+    <li><a href="offline-mode.html">Offline Mode</a></li>
+    <li><a href="plan.html">Plan Your Own Vacation</a></li>
+  </ul>
+</nav>
+
+<main>
+  <h2>Mystery Trip Generator</h2>
+  <p class="intro">Tell us the number of travelers, your departure airport, and your travel dates. You'll see your destination exactly 24 hours before departure.</p>
+
+  <section class="mystery-box">
+    <label for="people">Number of travelers:</label>
+    <select id="people">
+      <option value="1">1 Person</option>
+      <option value="2">2 People</option>
+      <option value="3">3 People</option>
+      <option value="4">4 People</option>
+      <option value="5">5+ People</option>
+    </select>
+
+    <label for="airport">Departure Airport:</label>
+    <select id="airport">
+      <option value="OTP">Bucharest Henri Coandă (OTP)</option>
+      <option value="CLJ">Cluj-Napoca Avram Iancu (CLJ)</option>
+      <option value="TSR">Timișoara Traian Vuia (TSR)</option>
+    </select>
+
+    <label for="depart-date">Departure Date:</label>
+    <input type="date" id="depart-date" />
+
+    <label for="return-date">Return Date:</label>
+    <input type="date" id="return-date" />
+
+    <div>
+      <button id="startBtn" disabled>Reveal My Trip</button>
+      <button id="skipBtn" disabled>Skip Wait</button>
+    </div>
+
+    <div class="countdown" id="countdown"></div>
+    <div class="location-display" id="display"></div>
+    <div class="final-location" id="result"></div>
+  </section>
+</main>
+
+<footer>
+  <p>📍 Bulevardul Unirii, Bucharest, Romania | 📞 +40 700 123 456 | 📧 contact@dreamspot.ro</p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const locations = [
+      {
+        name: "Barcelona, Spain",
+        image: "images/barcelona.jpg",
+        flightPrice: 180,
+        hotel: {
+          name: "Hotel Arts Barcelona",
+          price: 220,
+          image: "images/hotelbar.jpg"
+        }
+      },
+      {
+        name: "Santorini, Greece",
+        image: "images/santorini.jpg",
+        flightPrice: 300,
+        hotel: {
+          name: "Canaves Oia Suites",
+          price: 350,
+          image: "images/santotel.jpg"
+        }
+      },
+      {
+        name: "Rome, Italy",
+        image: "images/roma.jpg",
+        flightPrice: 200,
+        hotel: {
+          name: "Hotel Quirinale",
+          price: 150,
+          image: "images/hot.jpg"
+        }
+      }
+    ];
+
+    const people = document.getElementById('people');
+    const airport = document.getElementById('airport');
+    const departDate = document.getElementById('depart-date');
+    const returnDate = document.getElementById('return-date');
+    const startBtn = document.getElementById('startBtn');
+    const skipBtn = document.getElementById('skipBtn');
+    const countdownEl = document.getElementById('countdown');
+    const display = document.getElementById('display');
+    const result = document.getElementById('result');
+
+    let countdownInterval;
+    let chosenLocation;
+
+    const today = new Date().toISOString().split("T")[0];
+    departDate.min = today;
+    returnDate.min = today;
+
+    function validateInputs() {
+      if (
+        departDate.value &&
+        returnDate.value &&
+        people.value &&
+        airport.value &&
+        returnDate.value >= departDate.value
+      ) {
+        startBtn.disabled = false;
+        skipBtn.disabled = false;
+      } else {
+        startBtn.disabled = true;
+        skipBtn.disabled = true;
+      }
+    }
+
+    function resetDisplay() {
+      countdownEl.textContent = '';
+      display.textContent = '';
+      result.innerHTML = '';
+      clearInterval(countdownInterval);
+    }
+
+    departDate.addEventListener('change', () => {
+      returnDate.min = departDate.value;
+      validateInputs();
+      resetDisplay();
+    });
+
+    returnDate.addEventListener('change', () => {
+      validateInputs();
+      resetDisplay();
+    });
+
+    people.addEventListener('change', () => {
+      validateInputs();
+      resetDisplay();
+    });
+
+    airport.addEventListener('change', () => {
+      validateInputs();
+      resetDisplay();
+    });
+
+    startBtn.addEventListener('click', () => {
+      chosenLocation = locations[Math.floor(Math.random() * locations.length)];
+      const departDateObj = new Date(departDate.value + 'T00:00:00');
+      const revealTime = new Date(departDateObj.getTime() - 24 * 60 * 60 * 1000);
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = revealTime - now;
+
+        if (diff <= 0) {
+          clearInterval(countdownInterval);
+          countdownEl.textContent = 'Time to reveal your trip!';
+          revealTrip();
+          return;
+        }
+
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        countdownEl.textContent = `Trip details will be revealed in ${hours}h ${minutes}m ${seconds}s...`;
+      }
+
+      updateCountdown();
+      countdownInterval = setInterval(updateCountdown, 1000);
+    });
+
+    skipBtn.addEventListener('click', () => {
+      clearInterval(countdownInterval);
+      countdownEl.textContent = '';
+      revealTrip();
+    });
+
+    function revealTrip() {
+      display.textContent = "Tickets purchased! Your surprise destination is: " + chosenLocation.name;
+      result.innerHTML = `
+        <img src="${chosenLocation.image}" alt="${chosenLocation.name}">
+        <div class="ticket">
+          <h4>Flight Ticket</h4>
+          <p>From: ${airport.options[airport.selectedIndex].text}</p>
+          <p>To: ${chosenLocation.name}</p>
+          <p>Airfare: €${chosenLocation.flightPrice} per person</p>
+        </div>
+        <div class="accommodation">
+          <h4>Accommodation</h4>
+          <p>Hotel: ${chosenLocation.hotel.name}</p>
+          <p>Price per night: €${chosenLocation.hotel.price}</p>
+          <img src="${chosenLocation.hotel.image}" alt="Hotel Image">
+        </div>
+      `;
+    }
+  });
+</script>
+
+</body>
+</html>
